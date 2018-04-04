@@ -74,7 +74,7 @@
         <dependency>
             <groupId>nl.knaw.dans.shared</groupId>
             <artifactId>dans-mvn-build-resources</artifactId>
-            <version>3.0.1</version>
+            <version>${dans-mvn-build-resources.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
