@@ -16,17 +16,16 @@
     limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>nl.knaw.dans.shared</groupId>
         <artifactId>dans-mvn-base</artifactId>
-        <version>2.0.0-SNAPSHOT</version>
+        <version>2.0.0</version>
     </parent>
     <artifactId>dans-mvn-plugin-defaults</artifactId>
     <name>DANS Maven Project Plug-In Defaults</name>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.0.0</version>
     <packaging>pom</packaging>
     <description>
         Defines the default configuration and version for plug-ins used in DANS projects.
@@ -52,7 +51,7 @@
         <!-- Assembling installables -->
         <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
         <rpm-maven-plugin.version>2.1.5</rpm-maven-plugin.version>
-        <rpm-release/><!-- Only declared here, override on the command line if you need a custom release for the RPM -->
+        <rpm-release /><!-- Only declared here, override on the command line if you need a custom release for the RPM -->
         <dans-provider-name>dans.knaw.nl</dans-provider-name>
         <rpm-replace-configuration>true</rpm-replace-configuration> <!-- Change to noreplace  if you want to support automatically upgrading config files in post install scripts -->
         <main-class>NoMainClass</main-class><!-- Only a placeholder is declared here. The inheriting project should fill in the FQN of the main class -->
@@ -75,7 +74,7 @@
         <dependency>
             <groupId>nl.knaw.dans.shared</groupId>
             <artifactId>dans-mvn-build-resources</artifactId>
-            <version>${dans-mvn-build-resources.version}</version>
+            <version>3.0.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
@@ -202,21 +201,21 @@
                             <configuration>
                                 <target>
                                     <java classname="nl.knaw.dans.build.GenerateRpmScripts" failonerror="true">
-                                        <arg value="${project.build.directory}/dans-build-resources/rpm-includes"/>
-                                        <arg value="${project.build.directory}/dans-rpm-scripts"/>
-                                        <arg value="${project.basedir}/src/main/rpm/build-0-prepare.sh"/>
-                                        <arg value="${project.basedir}/src/main/rpm/build-1-install.sh"/>
-                                        <arg value="${project.basedir}/src/main/rpm/build-2-clean.sh"/>
-                                        <arg value="${project.basedir}/src/main/rpm/0-pre-trans.sh"/>
-                                        <arg value="${project.basedir}/src/main/rpm/1-pre-install.sh"/>
-                                        <arg value="${project.basedir}/src/main/rpm/2-post-install.sh"/>
-                                        <arg value="${project.basedir}/src/main/rpm/3-pre-remove.sh"/>
-                                        <arg value="${project.basedir}/src/main/rpm/4-post-remove.sh"/>
-                                        <arg value="${project.basedir}/src/main/rpm/5-post-trans.sh"/>
-                                        <arg value="${project.basedir}/src/main/rpm/6-verify.sh"/>
+                                        <arg value="${project.build.directory}/dans-build-resources/rpm-includes" />
+                                        <arg value="${project.build.directory}/dans-rpm-scripts" />
+                                        <arg value="${project.basedir}/src/main/rpm/build-0-prepare.sh" />
+                                        <arg value="${project.basedir}/src/main/rpm/build-1-install.sh" />
+                                        <arg value="${project.basedir}/src/main/rpm/build-2-clean.sh" />
+                                        <arg value="${project.basedir}/src/main/rpm/0-pre-trans.sh" />
+                                        <arg value="${project.basedir}/src/main/rpm/1-pre-install.sh" />
+                                        <arg value="${project.basedir}/src/main/rpm/2-post-install.sh" />
+                                        <arg value="${project.basedir}/src/main/rpm/3-pre-remove.sh" />
+                                        <arg value="${project.basedir}/src/main/rpm/4-post-remove.sh" />
+                                        <arg value="${project.basedir}/src/main/rpm/5-post-trans.sh" />
+                                        <arg value="${project.basedir}/src/main/rpm/6-verify.sh" />
                                         <classpath>
                                             <!-- Somehow using project.build.directory here does not work -->
-                                            <pathelement location="target/dans-build-resources"/>
+                                            <pathelement location="target/dans-build-resources" />
                                         </classpath>
                                     </java>
                                 </target>
@@ -562,7 +561,7 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore/>
+                                        <ignore />
                                     </action>
                                 </pluginExecution>
                                 <pluginExecution>
@@ -581,7 +580,7 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore/>
+                                        <ignore />
                                     </action>
                                 </pluginExecution>
                                 <pluginExecution>
@@ -726,4 +725,8 @@
             </plugin>
         </plugins>
     </build>
+
+  <scm>
+    <tag>v2.0.0</tag>
+  </scm>
 </project>
