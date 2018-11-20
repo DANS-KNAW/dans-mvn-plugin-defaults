@@ -497,13 +497,8 @@
                         <encoding>UTF-8</encoding>
                         <linksource>true</linksource>
                         <quiet>true</quiet>
-                        <bottom><![CDATA[Copyright ${project.inceptionYear}, <a href="http://www.dans.knaw.nl">DANS<a>
-	                                    <code>build: yworks-uml-doclet ${maven.build.timestamp}</code>
-	                                    ]]></bottom>
+                        <bottom><![CDATA[Copyright ${project.inceptionYear}, <a href="http://www.dans.knaw.nl">DANS<a>]]></bottom>
                         <overview>src/main/java/overview.html</overview>
-                        <doclet>ydoc.doclets.YStandard</doclet>
-                        <docletPath>${project.build.directory}/dans-build-resources/yworks-uml-doclet/lib/ydoc.jar:${project.build.directory}/dans-build-resources/yworks-uml-doclet/resources</docletPath>
-                        <additionalparam>-umlautogen</additionalparam>
                         <additionalJOptions>
                             <additionalJOption>-J-Xmx1g</additionalJOption>
                             <additionalJOption>-J-Djava.awt.headless=true</additionalJOption>
