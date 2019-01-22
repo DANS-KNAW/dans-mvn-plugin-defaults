@@ -38,6 +38,7 @@
         <scala.version>2.12.3</scala.version>
         <scala.binary.version>2.12</scala.binary.version>
         <scala-maven-plugin.version>3.4.6</scala-maven-plugin.version>
+        <kind-projector-compiler-plugin.version>0.9.9</kind-projector-compiler-plugin.version>
         <scalatest-maven-plugin.version>1.0</scalatest-maven-plugin.version>
 
 
@@ -174,7 +175,7 @@
                             <compilerPlugin>
                                 <groupId>org.spire-math</groupId>
                                 <artifactId>kind-projector_2.12</artifactId>
-                                <version>0.9.9</version>
+                                <version>${kind-projector-compiler-plugin.version}</version>
                             </compilerPlugin>
                         </compilerPlugins>
                     </configuration>
