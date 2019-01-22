@@ -37,7 +37,7 @@
         <maven-dependency-plugin.version>3.0.2</maven-dependency-plugin.version>
         <scala.version>2.12.3</scala.version>
         <scala.binary.version>2.12</scala.binary.version>
-        <scala-maven-plugin.version>3.4.4</scala-maven-plugin.version>
+        <scala-maven-plugin.version>3.4.6</scala-maven-plugin.version>
         <scalatest-maven-plugin.version>1.0</scalatest-maven-plugin.version>
 
 
