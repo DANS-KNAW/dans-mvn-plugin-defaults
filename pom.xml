@@ -37,7 +37,7 @@
     </scm>
     <properties>
         <!-- Build resources support -->
-        <dans-mvn-build-resources.version>3.2.0</dans-mvn-build-resources.version>
+        <dans-mvn-build-resources.version>4.0.0</dans-mvn-build-resources.version>
         <maven-dependency-plugin.version>3.0.2</maven-dependency-plugin.version>
         <scala.version>2.12.3</scala.version>
         <scala.binary.version>2.12</scala.binary.version>
