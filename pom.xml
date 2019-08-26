@@ -735,6 +735,7 @@
                         <email>info@dans.knaw.nl</email>
                     </properties>
                     <excludes>
+                        <exclude>.github/**</exclude>
                         <exclude>LICENSE</exclude>
                         <exclude>**/README</exclude>
                         <exclude>**/*.sc</exclude>
@@ -743,8 +744,6 @@
                         <exclude>out/</exclude>
                         <exclude>data/</exclude>
                         <exclude>data-*/</exclude>
-                        <exclude>.vagrant/</exclude>
-                        <exclude>Vagrantfile</exclude>
                         <exclude>**/hosts</exclude>
                         <exclude>**/*.retry</exclude>
                         <exclude>apphome.sh</exclude>
@@ -753,8 +752,6 @@
                         <exclude>src/site/resources/**</exclude>
                         <exclude>src/main/resources/**</exclude>
                         <exclude>src/main/assembly/dist/**</exclude>
-                        <exclude>src/main/ansible/ansible.cfg</exclude>
-                        <exclude>src/main/ansible/*.repo</exclude>
                         <exclude>.yum-repo/</exclude>
                         <exclude>.dans.knaw.nl-yum-repo/</exclude>
                         <exclude>*.pyc</exclude>
