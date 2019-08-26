@@ -16,31 +16,35 @@
     limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>nl.knaw.dans.shared</groupId>
         <artifactId>dans-mvn-base</artifactId>
-        <version>2.0.0</version>
+        <version>4.0.0-SNAPSHOT</version>
         <relativePath>../dans-mvn-base</relativePath>
     </parent>
     <artifactId>dans-mvn-plugin-defaults</artifactId>
     <name>DANS Maven Project Plug-In Defaults</name>
-    <version>2.3.1-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <description>
         Defines the default configuration and version for plug-ins used in DANS projects.
     </description>
+    <scm>
+        <developerConnection>scm:git:https://github.com/DANS-KNAW/${project.artifactId}</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
     <properties>
         <!-- Build resources support -->
-        <dans-mvn-build-resources.version>3.2.0</dans-mvn-build-resources.version>
+        <dans-mvn-build-resources.version>4.0.0</dans-mvn-build-resources.version>
         <maven-dependency-plugin.version>3.0.2</maven-dependency-plugin.version>
         <scala.version>2.12.3</scala.version>
         <scala.binary.version>2.12</scala.binary.version>
         <scala-maven-plugin.version>3.4.6</scala-maven-plugin.version>
         <kind-projector-compiler-plugin.version>0.9.9</kind-projector-compiler-plugin.version>
         <scalatest-maven-plugin.version>1.0</scalatest-maven-plugin.version>
-
 
         <!-- Building binaries and source packages -->
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
@@ -49,15 +53,22 @@
         <maven-jar-plugin.version>2.4</maven-jar-plugin.version>
         <maven-war-plugin.version>2.6</maven-war-plugin.version>
         <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
+        <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
 
         <!-- Assembling installables -->
         <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
         <rpm-maven-plugin.version>2.1.5</rpm-maven-plugin.version>
-        <rpm-release /><!-- Only declared here, override on the command line if you need a custom release for the RPM -->
+        <rpm-release/><!-- Only declared here, override on the command line if you need a custom release for the RPM -->
         <dans-provider-name>dans.knaw.nl</dans-provider-name>
         <rpm-replace-configuration>true</rpm-replace-configuration> <!-- Change to noreplace  if you want to support automatically upgrading config files in post install scripts -->
         <main-class>NoMainClass</main-class><!-- Only a placeholder is declared here. The inheriting project should fill in the FQN of the main class -->
         <maven-assembly-plugin.version>3.0.0</maven-assembly-plugin.version>
+
+        <!-- Distributing installables -->
+        <rpm-snapshot-repository>http://maven-repo.dans.knaw.nl/repository/rpm-snapshots</rpm-snapshot-repository>
+        <rpm-release-repository>http://maven-repo.dans.knaw.nl/repository/rpm-releases</rpm-release-repository>
+        <rpm-snapshot-repository-test>http://dnexus.dans.knaw.nl/repository/rpm-snapshots</rpm-snapshot-repository-test>
+        <rpm-release-repository-test>http://dnexus.dans.knaw.nl/repository/rpm-releases</rpm-release-repository-test>
 
         <!-- Debugging -->
         <exec-maven-plugin.version>1.4.0</exec-maven-plugin.version>
@@ -72,8 +83,6 @@
         <maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
         <maven-java-formatter-plugin.version>0.4</maven-java-formatter-plugin.version>
         <maven-site-plugin.version>3.7</maven-site-plugin.version>
-
-
     </properties>
     <repositories>
         <repository>
@@ -219,27 +228,89 @@
                     <version>${maven-antrun-plugin.version}</version>
                     <executions>
                         <execution>
-                            <phase>initialize</phase>
+                            <phase>generate-sources</phase>
                             <configuration>
                                 <target name="generate-rpm-scripts">
                                     <java classname="nl.knaw.dans.build.GenerateRpmScripts" failonerror="true">
-                                        <arg value="${project.build.directory}/dans-build-resources/rpm-includes" />
-                                        <arg value="${project.build.directory}/dans-rpm-scripts" />
-                                        <arg value="${project.basedir}/src/main/rpm/build-0-prepare.sh" />
-                                        <arg value="${project.basedir}/src/main/rpm/build-1-install.sh" />
-                                        <arg value="${project.basedir}/src/main/rpm/build-2-clean.sh" />
-                                        <arg value="${project.basedir}/src/main/rpm/0-pre-trans.sh" />
-                                        <arg value="${project.basedir}/src/main/rpm/1-pre-install.sh" />
-                                        <arg value="${project.basedir}/src/main/rpm/2-post-install.sh" />
-                                        <arg value="${project.basedir}/src/main/rpm/3-pre-remove.sh" />
-                                        <arg value="${project.basedir}/src/main/rpm/4-post-remove.sh" />
-                                        <arg value="${project.basedir}/src/main/rpm/5-post-trans.sh" />
-                                        <arg value="${project.basedir}/src/main/rpm/6-verify.sh" />
+                                        <arg value="${project.build.directory}/dans-build-resources/rpm-includes"/>
+                                        <arg value="${project.build.directory}/dans-rpm-scripts"/>
+                                        <arg value="${project.basedir}/src/main/rpm/build-0-prepare.sh"/>
+                                        <arg value="${project.basedir}/src/main/rpm/build-1-install.sh"/>
+                                        <arg value="${project.basedir}/src/main/rpm/build-2-clean.sh"/>
+                                        <arg value="${project.basedir}/src/main/rpm/0-pre-trans.sh"/>
+                                        <arg value="${project.basedir}/src/main/rpm/1-pre-install.sh"/>
+                                        <arg value="${project.basedir}/src/main/rpm/2-post-install.sh"/>
+                                        <arg value="${project.basedir}/src/main/rpm/3-pre-remove.sh"/>
+                                        <arg value="${project.basedir}/src/main/rpm/4-post-remove.sh"/>
+                                        <arg value="${project.basedir}/src/main/rpm/5-post-trans.sh"/>
+                                        <arg value="${project.basedir}/src/main/rpm/6-verify.sh"/>
                                         <classpath>
                                             <!-- Somehow using project.build.directory here does not work -->
-                                            <pathelement location="target/dans-build-resources" />
+                                            <pathelement location="target/dans-build-resources"/>
                                         </classpath>
                                     </java>
+                                </target>
+                            </configuration>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>get-project-type</id>
+                            <phase>validate</phase>
+                            <configuration>
+                                <exportAntProperties>true</exportAntProperties>
+                                <target>
+                                    <echo message="Setting dynamic properties (default)"/>
+                                    <!--suppress UnresolvedMavenProperty -->
+                                    <echo message="Current value: skip-exec = ${skip-exec}"/>
+                                    <condition property="isSnapshot">
+                                        <contains string="${project.version}" substring="SNAPSHOT"/>
+                                    </condition>
+                                    <condition property="isPomProject">
+                                        <equals arg1="${project.packaging}" arg2="pom"/>
+                                    </condition>
+                                    <!--suppress UnresolvedMavenProperty -->
+                                    <echo message="isSnapshot = ${isSnapshot}"/>
+                                    <!--suppress UnresolvedMavenProperty -->
+                                    <echo message="isPomProject = ${isPomProject}"/>
+
+                                    <!-- Turn on alternative deploy via exec-maven-plugin if this is not a pom-project (assuming it is RPM) ... -->
+                                    <condition property="skip-exec"
+                                               value="true">
+                                        <isset property="isPomProject"/>
+                                    </condition>
+                                    <condition property="skip-deploy"
+                                               value="false">
+                                        <isset property="isPomProject"/>
+                                    </condition>
+                                    <!-- If a pom-project, then switch on normal maven-deploy-plugin -->
+                                    <property name="skip-exec" value="false"/>
+                                    <property name="skip-deploy" value="true"/>
+
+                                    <!-- Set the rpm-repository-url (only if non-pom-project) -->
+                                    <condition property="rpm-repository-url"
+                                               value="${rpm-snapshot-repository}">
+                                        <and>
+                                            <not>
+                                                <isset property="isPomProject"/>
+                                            </not>
+                                            <isset property="isSnapshot"/>
+                                        </and>
+                                    </condition>
+                                    <condition property="rpm-repository-url"
+                                               value="${rpm-release-repository}">
+                                        <and>
+                                            <not>
+                                                <isset property="isPomProject"/>
+                                            </not>
+                                            <not>
+                                                <isset property="isSnapshot"/>
+                                            </not>
+                                        </and>
+                                    </condition>
+                                    <!--suppress UnresolvedMavenProperty -->
+                                    <echo message="rpm-repository-url = ${rpm-repository-url}"/>
                                 </target>
                             </configuration>
                             <goals>
@@ -423,15 +494,52 @@
                     </executions>
                 </plugin>
 
-                <!-- Debugging -->
+                <!-- Distributing installables -->
                 <plugin>
+                    <!--
+                    This will call a python script included in dans-mvn-build-resources. The python script will
+                    deploy the RPM using the Nexus REST API for Yum repositories. It will also double check
+                    that that RPM is a snapshot.
+
+                    NOTE: The Nexus Credentials must available in the environment variables NEXUS_USER and NEXUS_PASSWORD!!
+                    (I could find no easy way to read the credentials from ~/.m2/settings.xml, where they are also provided,
+                    for the maven-deploy-plugin)
+                    -->
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
                     <version>${exec-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <configuration>
+                                <executable>python</executable>
+                                <workingDirectory>${project.basedir}</workingDirectory>
+                                <arguments>
+                                    <argument>${project.build.directory}/dans-build-resources/script/deploy-rpm.py</argument>
+                                    <!--suppress UnresolvedMavenProperty -->
+                                    <argument>${env.NEXUS_USER}</argument>
+                                    <!--suppress UnresolvedMavenProperty -->
+                                    <argument>${env.NEXUS_PASSWORD}</argument>
+                                    <!--suppress UnresolvedMavenProperty -->
+                                    <argument>${rpm-repository-url}/</argument>
+                                    <argument>${project.build.directory}</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                    </executions>
                     <configuration>
                         <mainClass>${main-class}</mainClass>
+                        <!-- Ignore, because property will be created dynamically, by the antrun plugin -->
+                        <!--suppress UnresolvedMavenProperty, MavenModelInspection -->
+                        <skip>${skip-exec}</skip>
                     </configuration>
                 </plugin>
+
+                <!-- Debugging -->
+                <!-- Also uses exec-maven-plugin, see above -->
 
                 <!-- Static code analysis -->
                 <plugin>
@@ -611,7 +719,7 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore />
+                                        <ignore/>
                                     </action>
                                 </pluginExecution>
                                 <pluginExecution>
@@ -630,7 +738,7 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore />
+                                        <ignore/>
                                     </action>
                                 </pluginExecution>
                                 <pluginExecution>
@@ -759,6 +867,7 @@
                         <exclude>**/*.fact</exclude>
                         <exclude>**/*.ldif</exclude>
                         <exclude>docs/</exclude>
+                        <exclude>node_modules/</exclude>
                     </excludes>
                 </configuration>
                 <executions>
@@ -770,6 +879,25 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${maven-deploy-plugin.version}</version>
+                <configuration>
+                    <!-- Ignore, because property will be created dynamically, by the antrun plugin -->
+                    <!--suppress UnresolvedMavenProperty, MavenModelInspection -->
+                    <skip>${skip-deploy}</skip>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>lib-deploy</id>
+            <properties>
+                <skip-exec>true</skip-exec>
+                <skip-deploy>false</skip-deploy>
+            </properties>
+        </profile>
+    </profiles>
 </project>
